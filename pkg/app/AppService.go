@@ -179,12 +179,29 @@ func (impl AppServiceImpl) UpdateApplicationStatusAndCheckIsHealthy(app v1alpha1
 	repoUrl := app.Spec.Source.RepoURL
 	repoUrl = repoUrl[strings.LastIndex(repoUrl, "/")+1:]
 	appName := strings.ReplaceAll(repoUrl, ".git", "")
+	// extract environment name from argocd app
 	evnName := strings.ReplaceAll(app.Name, appName+"-", "")
+	//appName = strings.ReplaceAll(app.Name, "-"+evnName, "")
 	impl.logger.Debugw("event received ", "appName", appName, "evnName", evnName, "app", app)
 	dbApp, err := impl.appRepository.FindActiveByName(appName)
 	if err != nil && err != pg.ErrNoRows {
 		impl.logger.Errorw("error in fetching app name", "err", err, "appName", appName)
 		return isHealthy, err
+	}
+	// backward compatibility for updating application status - if unable to find app check it in charts
+	if err == pg.ErrNoRows {
+		chart, err := impl.chartRepository.FindByName(appName)
+		if err != nil {
+			impl.logger.Errorw("error in fetching chart", "err", err, "chart", appName)
+			return isHealthy, err
+		}
+		dbApp, err = impl.appRepository.FindById(chart.AppId)
+		if err != nil {
+			impl.logger.Errorw("error in fetching app", "err", err, "app", chart.AppId)
+			return isHealthy, err
+		}
+		// extract environment name from argocd app
+		evnName = strings.ReplaceAll(app.Name, dbApp.AppName+"-", "")
 	}
 	if dbApp.Id > 0 && dbApp.AppStore == true {
 		impl.logger.Debugw("skipping application status update as this app is chart", "appName", appName)
