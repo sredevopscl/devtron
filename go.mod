@@ -11,7 +11,7 @@ require (
 	github.com/argoproj/argo v2.4.1+incompatible
 	github.com/argoproj/argo-cd v1.2.3
 	github.com/argoproj/pkg v0.0.0-20190830164810-036726ef3c78 // indirect
-	github.com/aws/aws-sdk-go v1.25.16
+	github.com/aws/aws-sdk-go v1.34.0
 	github.com/caarlos0/env v3.5.0+incompatible
 	github.com/casbin/casbin v1.9.1
 	github.com/casbin/xorm-adapter v1.0.1-0.20190716004226-a317737a1007
@@ -90,7 +90,6 @@ require (
 	github.com/xeipuuv/gojsonschema v1.2.0
 	go.uber.org/multierr v1.2.0 // indirect
 	go.uber.org/zap v1.10.0
-	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2
 	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8
 	google.golang.org/grpc v1.33.1
 	google.golang.org/protobuf v1.25.0
@@ -104,7 +103,6 @@ require (
 	k8s.io/apimachinery v0.0.0-20190816221834-a9f1d8a9c101
 	k8s.io/client-go v11.0.1-0.20190820062731-7e43eff7c80a+incompatible
 	k8s.io/helm v2.12.3+incompatible
-	k8s.io/klog v1.0.0
 	k8s.io/kube-openapi v0.0.0-20190918143330-0270cf2f1c1d // indirect
 	k8s.io/utils v0.0.0-20191010214722-8d271d903fe4
 	mellium.im/sasl v0.2.1 // indirect
